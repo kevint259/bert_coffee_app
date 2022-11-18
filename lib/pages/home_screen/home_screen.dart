@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           // sized box
           const SizedBox(
-            height: 100,
+            height: 180,
           ),
           // sign up using email text button
           SignInButton(
