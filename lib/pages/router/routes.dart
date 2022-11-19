@@ -1,4 +1,5 @@
 
+import 'package:bert_coffee/pages/authentication/email_verify_screen.dart';
 import 'package:bert_coffee/pages/authentication/login_screen.dart';
 import 'package:bert_coffee/pages/authentication/register_screen.dart';
 import 'package:bert_coffee/pages/home_screen/home_screen.dart';
@@ -16,6 +17,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case '/register': 
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
+      case 'verifyEmail':
+        return MaterialPageRoute(builder: (_) => const EmailVerifyScreen());
       default:
         return null;
     }
