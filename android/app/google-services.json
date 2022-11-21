@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "379858781025",
+    "project_id": "bert-coffee",
+    "storage_bucket": "bert-coffee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379858781025:android:853c9492dd8ccc6216fb20",
+        "android_client_info": {
+          "package_name": "com.kevr.bert_coffee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "379858781025-s3s7d609d64j3m55q36q9fjd8uq2k648.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNERsYWCba7pAFcNcNpV8T_x5iwfyzgbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "379858781025-s3s7d609d64j3m55q36q9fjd8uq2k648.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

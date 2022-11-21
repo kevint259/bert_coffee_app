@@ -93,9 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 20),
             // SIGN UP BUTTON
             ElevatedButton(
-              onPressed: () {
-
-              },
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
                   elevation: 2,
                   padding:
@@ -122,17 +120,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   TextSpan(
-                    text: "Register Here.",
-                    recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Navigator.of(context).pushNamed('/register');
-                    },
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    )
-                  )
+                      text: "Register Here.",
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.of(context).pushNamed('/register');
+                        },
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ))
                 ],
               ),
             ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +10,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-    final TextEditingController _email = TextEditingController();
+  final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _name = TextEditingController();
   @override
@@ -119,9 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(height: 20),
             // SIGN UP BUTTON
             ElevatedButton(
-              onPressed: () {
-                
-              },
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
                   elevation: 2,
                   padding:
@@ -148,21 +145,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   TextSpan(
-                    text: "Login Here.",
-                    recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Navigator.of(context).pushNamed('/login');
-                    },
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    )
-                  )
+                      text: "Login Here.",
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.of(context).pushNamed('/login');
+                        },
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ))
                 ],
               ),
             ),
-            
           ],
         ),
       ),

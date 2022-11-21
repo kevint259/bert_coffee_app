@@ -1,4 +1,3 @@
-import 'package:bert_coffee/constants/colors.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -28,7 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
           // sign up using email text button
           SignInButton(
             Buttons.Email,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed('/login');
+            },
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             padding: const EdgeInsets.symmetric(
@@ -69,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
             elevation: 3,
           ),
           // sizedbox
-          const SizedBox(height: 70),
+          const SizedBox(height: 30),
           // already have an account, sign in?
           Padding(
             padding: const EdgeInsets.all(30.0),
@@ -77,14 +78,14 @@ class _HomeScreenState extends State<HomeScreen> {
               text: TextSpan(
                 children: <TextSpan>[
                   const TextSpan(
-                      text: "Already have an account?",
+                      text: "Don't have an account?",
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.black,
                       )),
                   TextSpan(
-                    recognizer: TapGestureRecognizer()..onTap = () => Navigator.of(context).pushNamed('/login'),
-                    text: " Sign In Here.",
+                    recognizer: TapGestureRecognizer()..onTap = () => Navigator.of(context).pushNamed('/register'),
+                    text: " Register Here.",
                     style: const TextStyle(
                         color: Colors.blue,
                         fontSize: 16,
