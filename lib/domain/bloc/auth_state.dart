@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 @immutable
-class AuthState {
+abstract class AuthState {
   const AuthState();
 }
 
