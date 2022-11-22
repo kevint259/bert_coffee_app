@@ -16,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: [
@@ -108,12 +109,21 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             // SizedBox
             const SizedBox(height: 20),
-            // Not a member? Register Here.
+            // Forgot Password?
+            const Text("Forgot Password?",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                )),
+            // Sizedbox
+            const SizedBox(height:30),
+            // Not yet a member? Register Here.
             RichText(
               text: TextSpan(
                 children: [
                   const TextSpan(
-                    text: "Dont have an account? ",
+                    text: "Not yet a member? ",
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.black,
@@ -135,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             // Terms and Conditions
             Padding(
-              padding: const EdgeInsets.only(top: 180, left: 80, right: 60),
+              padding: const EdgeInsets.only(top: 140),
               child: Center(
                 child: RichText(
                   text: TextSpan(children: [
