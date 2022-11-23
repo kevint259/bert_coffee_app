@@ -1,5 +1,8 @@
+import 'package:bert_coffee/domain/bloc/auth_bloc.dart';
+import 'package:bert_coffee/domain/bloc/auth_event.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,8 +13,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _password = TextEditingController();
+  late final TextEditingController _email;
+  late final TextEditingController _password;
+
+  @override
+  void initState() {
+    _email = TextEditingController();
+    _password = TextEditingController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
               child: TextFormField(
                 controller: _password,
-                obscureText: false,
+                obscureText: true,
                 autocorrect: false,
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -92,11 +102,15 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             // sizedBox
             const SizedBox(height: 20),
-            // SIGN UP BUTTON
+            // SIGN IN BUTTON
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
+                context.read<AuthBloc>().add(AuthEventLogIn(email, password));
+              },
               style: ElevatedButton.styleFrom(
-                  elevation: 2,
+                  elevation: 3,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 60, vertical: 10)),
               child: Text(
@@ -117,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.red,
                 )),
             // Sizedbox
-            const SizedBox(height:30),
+            const SizedBox(height: 30),
             // Not yet a member? Register Here.
             RichText(
               text: TextSpan(

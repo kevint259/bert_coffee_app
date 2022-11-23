@@ -2,7 +2,7 @@
 import 'package:bert_coffee/pages/authentication/email_verify_screen.dart';
 import 'package:bert_coffee/pages/authentication/login_screen.dart';
 import 'package:bert_coffee/pages/authentication/register_screen.dart';
-import 'package:bert_coffee/pages/home_screen/home_screen.dart';
+import 'package:bert_coffee/pages/default_home/default_home.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
@@ -12,7 +12,7 @@ class AppRouter {
     switch (settings.name) {
       case '/home':
         return MaterialPageRoute(
-          builder: (_) => const HomeScreen());
+          builder: (_) => const DefaultHome());
       case '/login':
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case '/register': 

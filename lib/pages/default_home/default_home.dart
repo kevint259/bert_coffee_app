@@ -1,15 +1,16 @@
+import 'package:bert_coffee/constants/routes.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class DefaultHome extends StatefulWidget {
+  const DefaultHome({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<DefaultHome> createState() => _DefaultHomeState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _DefaultHomeState extends State<DefaultHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SignInButton(
             Buttons.Email,
             onPressed: () {
-              Navigator.of(context).pushNamed('/login');
+              Navigator.of(context).pushNamed(loginRoute);
             },
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -84,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.black,
                       )),
                   TextSpan(
-                    recognizer: TapGestureRecognizer()..onTap = () => Navigator.of(context).pushNamed('/register'),
+                    recognizer: TapGestureRecognizer()..onTap = () => Navigator.of(context).pushNamed(registerRoute),
                     text: " Register Here.",
                     style: const TextStyle(
                         color: Colors.blue,

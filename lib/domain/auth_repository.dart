@@ -96,7 +96,4 @@ class AuthRepository {
   // forgot password
 
 
-  // verify email
-
-
 }

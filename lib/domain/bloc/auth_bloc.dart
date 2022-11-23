@@ -1,17 +1,15 @@
 import 'dart:developer';
-
 import 'package:bert_coffee/domain/auth_repository.dart';
 import 'package:bert_coffee/domain/bloc/auth_event.dart';
 import 'package:bert_coffee/domain/bloc/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository authRepository;
-  AuthBloc(this.authRepository) : super(const AuthStateUninitialized()) {
+  AuthBloc(AuthRepository authRepository) : super(const AuthStateUninitialized()) {
 
     // on event of initializing app
     on<AuthEventInitialize>((event, emit) async {
-      await authRepository.initialize();
+      // await authRepository.initialize();
       final user = authRepository.currentUser;
       if (user == null) {
         emit(const AuthStateLoggedOut());
@@ -59,6 +57,36 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         log(e.toString());
       }
     });
+
+    // on the event that the user is logged out
+    on<AuthEventLogOut>((event, emit) async {
+      try {
+        await authRepository.logOut();
+        emit(const AuthStateLoggedOut());
+      } on Exception catch (e) {
+        log(e.toString());
+        emit(const AuthStateLoggedOut());
+      }
+    });
+
+    // on the event the user verifies email
+    on<AuthEventVerifyEmail>((event, emit) async {
+      final user = authRepository.currentUser;
+      await user?.reload;
+      if (user != null) {
+        if (user.isEmailVerified) {
+          emit(const AuthStateLoggedIn());
+        } else {
+          await authRepository.sendEmailVerification();
+          emit(state);
+        }
+      } else {
+        emit(const AuthStateLoggedOut());
+      }
+    });
+
+    // on event user forgets password
+
 
 
   }
