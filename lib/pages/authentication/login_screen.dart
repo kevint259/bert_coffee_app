@@ -1,3 +1,4 @@
+import 'package:bert_coffee/constants/routes.dart';
 import 'package:bert_coffee/domain/bloc/auth_bloc.dart';
 import 'package:bert_coffee/domain/bloc/auth_event.dart';
 import 'package:flutter/gestures.dart';
@@ -52,7 +53,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
             // email text field
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
               child: TextFormField(
                 controller: _email,
                 obscureText: false,
@@ -77,7 +79,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             // password text_field
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
               child: TextFormField(
                 controller: _password,
                 obscureText: true,
@@ -100,19 +103,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 maxLines: 1,
               ),
             ),
+
             // sizedBox
             const SizedBox(height: 20),
+
             // SIGN IN BUTTON
             ElevatedButton(
-              onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
-                context.read<AuthBloc>().add(AuthEventLogIn(email, password));
-              },
               style: ElevatedButton.styleFrom(
                   elevation: 3,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 60, vertical: 10)),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 60, vertical: 10)),
               child: Text(
                 "Login",
                 style: GoogleFonts.aBeeZee(
@@ -120,9 +120,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 maxLines: 1,
               ),
+              onPressed: () {
+                final email = _email.text;
+                final password = _password.text;
+                context.read<AuthBloc>().add(AuthEventLogIn(email, password));
+              },
             ),
+
             // SizedBox
             const SizedBox(height: 20),
+
             // Forgot Password?
             const Text("Forgot Password?",
                 style: TextStyle(
@@ -130,8 +137,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.bold,
                   color: Colors.red,
                 )),
+
             // Sizedbox
             const SizedBox(height: 30),
+
             // Not yet a member? Register Here.
             RichText(
               text: TextSpan(
@@ -147,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       text: "Register Here.",
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.of(context).pushNamed('/register');
+                          Navigator.of(context).pushNamed(registerRoute);
                         },
                       style: const TextStyle(
                         fontSize: 12,
@@ -157,6 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
+
             // Terms and Conditions
             Padding(
               padding: const EdgeInsets.only(top: 140),

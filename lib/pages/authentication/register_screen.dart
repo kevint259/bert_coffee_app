@@ -1,6 +1,11 @@
+import 'package:bert_coffee/constants/routes.dart';
+import 'package:bert_coffee/domain/bloc/auth_event.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../domain/bloc/auth_bloc.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -10,9 +15,18 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _password = TextEditingController();
-  final TextEditingController _name = TextEditingController();
+  late final TextEditingController _email;
+  late final TextEditingController _password;
+  late final TextEditingController _name;
+
+  @override
+  void initState() {
+    _email = TextEditingController();
+    _password = TextEditingController();
+    _name = TextEditingController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,7 +133,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(height: 20),
             // SIGN UP BUTTON
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                final name = _name.text;
+                final email = _email.text;
+                final password = _password.text;
+                context.read<AuthBloc>().add(AuthEventRegister(name, email, password));
+              },
               style: ElevatedButton.styleFrom(
                   elevation: 2,
                   padding:
@@ -149,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       text: "Login Here.",
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.of(context).pushNamed('/login');
+                          Navigator.of(context).pushNamed(loginRoute);
                         },
                       style: const TextStyle(
                         fontSize: 12,

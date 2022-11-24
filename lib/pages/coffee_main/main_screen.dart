@@ -1,4 +1,7 @@
+import 'package:bert_coffee/domain/bloc/auth_bloc.dart';
+import 'package:bert_coffee/domain/bloc/auth_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -24,7 +27,9 @@ class _MainScreenState extends State<MainScreen> {
 
         // logout button
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            context.read<AuthBloc>().add(const AuthEventLogOut());
+          },
           child: const Text(
             "Logout",
             style: TextStyle(fontSize: 16),

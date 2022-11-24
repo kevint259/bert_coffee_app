@@ -1,4 +1,9 @@
+import 'dart:async';
+
+import 'package:bert_coffee/domain/bloc/auth_bloc.dart';
+import 'package:bert_coffee/domain/bloc/auth_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EmailVerifyScreen extends StatefulWidget {
@@ -9,6 +14,22 @@ class EmailVerifyScreen extends StatefulWidget {
 }
 
 class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      context.read<AuthBloc>().add(const AuthEventVerifyEmail());
+     });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

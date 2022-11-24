@@ -3,7 +3,7 @@ import 'package:bert_coffee/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-class AuthRepository {
+class AuthProvider {
   final _firebaseAuth = FirebaseAuth.instance;
 
   // initializes app 
