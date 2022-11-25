@@ -1,6 +1,8 @@
 import 'package:bert_coffee/constants/routes.dart';
+import 'package:bert_coffee/domain/auth/auth_exceptions.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_event.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_state.dart';
+import 'package:bert_coffee/pages/widgets/dialogs/error_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,8 +33,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
-        
+      listener: (context, state) async {
+        if (state is AuthStateLoggedOut) {
+          if (state.exception is AuthEmailAlreadyInUseException) {
+            return showErrorDialog(context, "Email Already In Use");
+          } else if (state.exception is AuthInvalidEmailException) {
+            return showErrorDialog(context, 
+            "Invalid Email");
+          } else if (state.exception is AuthWeakPasswordException) {
+            return showErrorDialog(context, "Weak Password");
+          } else {
+            return showErrorDialog(context, "Error Occurred");
+          }
+        }
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
