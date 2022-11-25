@@ -34,3 +34,7 @@ class AuthEventResetPassword extends AuthEvent {
   final String email;
   const AuthEventResetPassword(this.email);
 }
+
+class AuthEventSignInWithEmail extends AuthEvent {
+  const AuthEventSignInWithEmail();
+}

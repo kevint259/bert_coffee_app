@@ -35,6 +35,8 @@ class AuthProvider {
         throw AuthEmailAlreadyInUseException();
       } else if (e.code == "weak-password") {
         throw AuthWeakPasswordException();
+      } else {
+        throw GenericAuthException();
       }
     } 
   }
@@ -53,8 +55,16 @@ class AuthProvider {
       } else {
         throw Exception("user does not exist");
       }
-    } catch (e) {
-      throw Exception(e.toString());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "invalid-email") {
+        throw AuthInvalidEmailException();
+      } else if (e.code == "user-not-found") {
+        throw AuthUserNotFoundException();
+      } else if (e.code == "wrong-password") {
+        throw AuthWrongPasswordException();
+      } else {
+        throw GenericAuthException();
+      }
     }
   }
 

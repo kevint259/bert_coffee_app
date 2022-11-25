@@ -20,3 +20,4 @@ class AuthUserNotFoundException implements Exception {}
 class AuthWrongPasswordException implements Exception {}
 
 // GENERIC EXCEPTION (everything else not on the top)
+class GenericAuthException implements Exception {}

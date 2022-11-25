@@ -22,6 +22,7 @@ void main() async {
   runApp(
     MaterialApp(
       title: "Bert Coffee App",
+      debugShowCheckedModeBanner: false,
       home: BlocProvider<AuthBloc>(
         create: (context) => AuthBloc(AuthProvider()),
         child: const StateScreen(),
@@ -32,14 +33,7 @@ void main() async {
           appBarTheme: const AppBarTheme(
               systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: Colors.white,
-          ))),
-      routes: {
-        loginRoute: (context) => const LoginScreen(),
-        registerRoute: (context) => const RegisterScreen(),
-        verifyEmailRoute: (context) => const EmailVerifyScreen(),
-        defaultPageRoute: (context) => const DefaultHome(),
-        mainRoute: (context) => const MainScreen(),
-      },
+          ),),),
     ),
   );
 }
@@ -61,9 +55,9 @@ class StateScreen extends StatelessWidget {
           return const RegisterScreen();
         } else if (state is AuthStateLoggedOut) {
           if (state.exception == null) {
-            return const LoginScreen();
-          } else {
             return const DefaultHome();
+          } else {
+            return const LoginScreen();
           }
         } else {
           return const Scaffold(

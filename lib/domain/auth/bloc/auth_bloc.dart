@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:bert_coffee/domain/auth/auth_exceptions.dart';
 import 'package:bert_coffee/domain/auth/auth_provider.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_event.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_state.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(AuthProvider provider) : super(const AuthStateUninitialized()) {
+
     // on event of initializing app
     on<AuthEventInitialize>((event, emit) async {
       await provider.initialize();
@@ -93,5 +95,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     // on event user forgets password
 
     // resend verification email
+
+    // on event user presses SIGN IN WITH EMAIL
+    on<AuthEventSignInWithEmail>((event, emit) {
+      emit(AuthStateLoggedOut(exception: GenericAuthException()));
+    });
   }
 }

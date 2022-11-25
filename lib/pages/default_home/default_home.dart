@@ -1,6 +1,9 @@
 import 'package:bert_coffee/constants/routes.dart';
+import 'package:bert_coffee/domain/auth/bloc/auth_bloc.dart';
+import 'package:bert_coffee/domain/auth/bloc/auth_event.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class DefaultHome extends StatefulWidget {
@@ -29,7 +32,7 @@ class _DefaultHomeState extends State<DefaultHome> {
           SignInButton(
             Buttons.Email,
             onPressed: () {
-              Navigator.of(context).pushNamed(loginRoute);
+              context.read<AuthBloc>().add(const AuthEventSignInWithEmail());
             },
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

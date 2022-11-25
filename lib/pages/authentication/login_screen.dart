@@ -1,4 +1,5 @@
 import 'package:bert_coffee/constants/routes.dart';
+import 'package:bert_coffee/domain/auth/auth_exceptions.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_bloc.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_event.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_state.dart';
@@ -31,8 +32,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is AuthStateLoggedOut) {
-          if (state.exception == true) {
-            return showErrorDialog(context, message)
+          if (state.exception is AuthWrongPasswordException) {
+            return showErrorDialog(context, "Wrong password");
+          } else if (state.exception is AuthInvalidEmailException) {
+            return showErrorDialog(context, "Invalid Email");
+          } else if (state.exception is AuthUserNotFoundException) {
+            return showErrorDialog(context, "User Not Found");
+          } else {
+            return showErrorDialog(context, "Wrong Credentials");
           }
         }
       },
