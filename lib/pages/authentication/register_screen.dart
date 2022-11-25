@@ -1,11 +1,11 @@
 import 'package:bert_coffee/constants/routes.dart';
-import 'package:bert_coffee/domain/bloc/auth_event.dart';
+import 'package:bert_coffee/domain/auth/bloc/auth_event.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../domain/bloc/auth_bloc.dart';
+import '../../domain/auth/bloc/auth_bloc.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

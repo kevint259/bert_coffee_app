@@ -1,8 +1,8 @@
 import 'package:bert_coffee/constants/routes.dart';
-import 'package:bert_coffee/domain/auth_repository.dart';
-import 'package:bert_coffee/domain/bloc/auth_bloc.dart';
-import 'package:bert_coffee/domain/bloc/auth_event.dart';
-import 'package:bert_coffee/domain/bloc/auth_state.dart';
+import 'package:bert_coffee/domain/auth/auth_provider.dart';
+import 'package:bert_coffee/domain/auth/bloc/auth_bloc.dart';
+import 'package:bert_coffee/domain/auth/bloc/auth_event.dart';
+import 'package:bert_coffee/domain/auth/bloc/auth_state.dart';
 import 'package:bert_coffee/firebase_options.dart';
 import 'package:bert_coffee/pages/authentication/email_verify_screen.dart';
 import 'package:bert_coffee/pages/authentication/login_screen.dart';
@@ -53,7 +53,6 @@ class StateScreen extends StatelessWidget {
     context.read<AuthBloc>().add(const AuthEventInitialize());
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
-        print(state);
         if (state is AuthStateLoggedIn) {
           return const MainScreen();
         } else if (state is AuthStateVerifyEmail) {
@@ -61,9 +60,15 @@ class StateScreen extends StatelessWidget {
         } else if (state is AuthStateRegistering) {
           return const RegisterScreen();
         } else if (state is AuthStateLoggedOut) {
-          return const LoginScreen();
+          if (state.exception == null) {
+            return const LoginScreen();
+          } else {
+            return const DefaultHome();
+          }
         } else {
-          return const DefaultHome();
+          return const Scaffold(
+            body: CircularProgressIndicator(),
+          );
         }
       },
     );

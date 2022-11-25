@@ -1,3 +1,4 @@
+import 'package:bert_coffee/domain/auth/auth_exceptions.dart';
 import 'package:bert_coffee/firebase_options.dart';
 import 'package:bert_coffee/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,9 +28,15 @@ class AuthProvider {
       } else  {
         throw Exception("oh no");
       }
-    } catch (e) {
-      throw Exception(e.toString());
-    }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "invalid-email") {
+        throw AuthInvalidEmailException();
+      } else if (e.code == "email-already-in-use") {
+        throw AuthEmailAlreadyInUseException();
+      } else if (e.code == "weak-password") {
+        throw AuthWeakPasswordException();
+      }
+    } 
   }
 
   // logs user in

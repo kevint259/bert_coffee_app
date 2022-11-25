@@ -1,19 +1,18 @@
 import 'dart:developer';
-import 'package:bert_coffee/domain/auth_repository.dart';
-import 'package:bert_coffee/domain/bloc/auth_event.dart';
-import 'package:bert_coffee/domain/bloc/auth_state.dart';
+
+import 'package:bert_coffee/domain/auth/auth_provider.dart';
+import 'package:bert_coffee/domain/auth/bloc/auth_event.dart';
+import 'package:bert_coffee/domain/auth/bloc/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc(AuthProvider provider)
-      : super(const AuthStateUninitialized()) {
-
+  AuthBloc(AuthProvider provider) : super(const AuthStateUninitialized()) {
     // on event of initializing app
     on<AuthEventInitialize>((event, emit) async {
       await provider.initialize();
       final user = provider.currentUser;
       if (user == null) {
-        emit(const AuthStateLoggedOut());
+        emit(const AuthStateLoggedOut(exception: null));
       } else {
         if (user.isEmailVerified) {
           emit(const AuthStateLoggedIn());
@@ -38,8 +37,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(const AuthStateVerifyEmail());
         }
       } on Exception catch (e) {
-        log(e.toString());
-        emit(const AuthStateLoggedOut());
+        emit(AuthStateLoggedOut(exception: e));
       }
     });
 
@@ -63,7 +61,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           }
         }
       } on Exception catch (e) {
-        log(e.toString());
+        emit(AuthStateLoggedOut(exception: e));
       }
     });
 
@@ -71,17 +69,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEventLogOut>((event, emit) async {
       try {
         await provider.logOut();
-        emit(const AuthStateLoggedOut());
+        emit(const AuthStateLoggedOut(exception: null));
       } on Exception catch (e) {
         log(e.toString());
-        emit(const AuthStateLoggedOut());
+        emit(const AuthStateLoggedOut(exception: null));
       }
     });
 
     // on the event the user verifies email
     on<AuthEventVerifyEmail>((event, emit) async {
       final user = provider.currentUser;
-      await user?.reload;
       if (user != null) {
         if (user.isEmailVerified) {
           emit(const AuthStateLoggedIn());
@@ -89,10 +86,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(state);
         }
       } else {
-        emit(const AuthStateLoggedOut());
+        emit(const AuthStateLoggedOut(exception: null));
       }
     });
 
     // on event user forgets password
+
+    // resend verification email
   }
 }
