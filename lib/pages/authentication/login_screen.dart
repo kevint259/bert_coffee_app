@@ -3,6 +3,7 @@ import 'package:bert_coffee/domain/auth/bloc/auth_bloc.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_event.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_state.dart';
 import 'package:bert_coffee/pages/widgets/dialogs/error_dialog.dart';
+import 'package:bert_coffee/pages/widgets/dialogs/reset_password.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
           } else {
             return showErrorDialog(context, "Error Occurred");
           }
+        } else if (state is AuthStateForgotPassword) {
+          return showResetPassword(context);
         }
       },
       child: Scaffold(
@@ -147,12 +150,20 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20),
 
               // Forgot Password?
-              const Text("Forgot Password?",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red,
-                  )),
+              InkWell(
+                onTap: () {
+                  context.read<AuthBloc>().add(const AuthEventForgotPassword());
+                },
+                child: const Text(
+                "Forgot Password?",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                )
+              )
+
+              ),
 
               // Sizedbox
               const SizedBox(height: 30),
@@ -172,7 +183,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: "Register Here.",
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            context.read<AuthBloc>().add(const AuthEventShouldRegister());
+                            context
+                                .read<AuthBloc>()
+                                .add(const AuthEventShouldRegister());
                           },
                         style: const TextStyle(
                           fontSize: 12,
@@ -223,6 +236,4 @@ class _LoginScreenState extends State<LoginScreen> {
     _password.dispose();
     super.dispose();
   }
-
 }
-

@@ -111,9 +111,20 @@ class AuthProvider {
   }
 
   // forgot password
-  Future<void> resetPassword() async {
-    final user = _firebaseAuth.currentUser;
-    
+  Future<void> resetPassword({
+    required String email,
+  }) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "invalid-email") {
+        throw AuthInvalidEmailException();
+      } else if (e.code == "user-not-found") {
+        throw AuthUserNotFoundException();
+      } else {
+        throw GenericAuthException();
+      }
+    }
   }
 
 }

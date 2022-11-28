@@ -19,7 +19,7 @@ class AuthUser extends Equatable {
   @override
   List<Object?> get props => throw [id, name, email, isEmailVerified];
 
-  // converts user --> authUser
+  // converts user --> authUserw
   factory AuthUser.fromFirebase(User user) => AuthUser(
         user.uid,
         user.displayName,

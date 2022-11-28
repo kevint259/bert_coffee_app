@@ -31,3 +31,7 @@ class AuthStateRegistering extends AuthState {
 class AuthStateVerifyEmail extends AuthState {
   const AuthStateVerifyEmail();
 }
+
+class AuthStateForgotPassword extends AuthState {
+  const AuthStateForgotPassword();
+}

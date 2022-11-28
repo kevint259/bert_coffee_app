@@ -42,3 +42,7 @@ class AuthEventResetPassword extends AuthEvent {
 class AuthEventSignInWithEmail extends AuthEvent {
   const AuthEventSignInWithEmail();
 }
+
+class AuthEventForgotPassword extends AuthEvent {
+  const AuthEventForgotPassword();
+}
