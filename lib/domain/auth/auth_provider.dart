@@ -111,6 +111,9 @@ class AuthProvider {
   }
 
   // forgot password
-
+  Future<void> resetPassword() async {
+    final user = _firebaseAuth.currentUser;
+    
+  }
 
 }

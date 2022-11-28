@@ -1,4 +1,3 @@
-import 'package:bert_coffee/constants/routes.dart';
 import 'package:bert_coffee/domain/auth/auth_exceptions.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_bloc.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_event.dart';
@@ -31,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
-        if (state is AuthStateLoggedOut) {
+        if (state is AuthStateLoggingIn) {
           if (state.exception is AuthWrongPasswordException) {
             return showErrorDialog(context, "Wrong password");
           } else if (state.exception is AuthInvalidEmailException) {
@@ -39,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
           } else if (state.exception is AuthUserNotFoundException) {
             return showErrorDialog(context, "User Not Found");
           } else {
-            return showErrorDialog(context, "Wrong Credentials");
+            return showErrorDialog(context, "Error Occurred");
           }
         }
       },
@@ -173,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: "Register Here.",
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.of(context).pushNamed(registerRoute);
+                            context.read<AuthBloc>().add(const AuthEventShouldRegister());
                           },
                         style: const TextStyle(
                           fontSize: 12,
@@ -186,30 +185,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // Terms and Conditions
               Padding(
-                padding: const EdgeInsets.only(top: 140),
-                child: Center(
-                  child: RichText(
-                    text: TextSpan(children: [
-                      const TextSpan(
-                        text: "By clicking sign up you agree to our ",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 11,
-                        ),
+                padding: const EdgeInsets.only(top: 140, left: 40, right: 40),
+                child: RichText(
+                  text: TextSpan(children: [
+                    const TextSpan(
+                      text: "By clicking sign up you agree to our ",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 11,
                       ),
-                      TextSpan(
-                        text: "Terms and Conditions and Privacy Policy.",
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => {
-                                // take the customer to another page which shows the Terms and Conditions
-                              },
-                        style: const TextStyle(
-                          color: Colors.blue,
-                          fontSize: 11,
-                        ),
-                      )
-                    ]),
-                  ),
+                    ),
+                    TextSpan(
+                      text: "Terms and Conditions and Privacy Policy.",
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => {
+                              // take the customer to another page which shows the Terms and Conditions
+                            },
+                      style: const TextStyle(
+                        color: Colors.blue,
+                        fontSize: 11,
+                      ),
+                    )
+                  ]),
                 ),
               )
             ],
@@ -226,4 +223,6 @@ class _LoginScreenState extends State<LoginScreen> {
     _password.dispose();
     super.dispose();
   }
+
 }
+

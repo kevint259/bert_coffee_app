@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:bert_coffee/domain/auth/auth_exceptions.dart';
 import 'package:bert_coffee/domain/auth/auth_provider.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_event.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_state.dart';
@@ -14,7 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await provider.initialize();
       final user = provider.currentUser;
       if (user == null) {
-        emit(const AuthStateLoggedOut(exception: null));
+        emit(const AuthStateLoggedOut());
       } else {
         if (user.isEmailVerified) {
           emit(const AuthStateLoggedIn());
@@ -39,7 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(const AuthStateVerifyEmail());
         }
       } on Exception catch (e) {
-        emit(AuthStateLoggedOut(exception: e));
+        emit(AuthStateLoggingIn(exception: e));
       }
     });
 
@@ -63,7 +62,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           }
         }
       } on Exception catch (e) {
-        emit(AuthStateLoggedOut(exception: e));
+        emit(AuthStateRegistering(exception: e));
       }
     });
 
@@ -71,10 +70,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEventLogOut>((event, emit) async {
       try {
         await provider.logOut();
-        emit(const AuthStateLoggedOut(exception: null));
+        emit(const AuthStateLoggedOut());
       } on Exception catch (e) {
         log(e.toString());
-        emit(const AuthStateLoggedOut(exception: null));
+        emit(state);
       }
     });
 
@@ -88,17 +87,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(state);
         }
       } else {
-        emit(const AuthStateLoggedOut(exception: null));
+        emit(const AuthStateLoggedOut());
       }
     });
 
     // on event user forgets password
+    on<AuthEventResetPassword>((event, emit) async {
+      
+    });
 
     // resend verification email
 
     // on event user presses SIGN IN WITH EMAIL
     on<AuthEventSignInWithEmail>((event, emit) {
-      emit(AuthStateLoggedOut(exception: GenericAuthException()));
+      emit(const AuthStateLoggingIn(exception: null));
+    });
+
+    // on event user wants to register
+    on<AuthEventShouldRegister>((event, emit) {
+      emit(const AuthStateRegistering(exception: null));
     });
   }
+
 }

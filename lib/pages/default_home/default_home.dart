@@ -88,7 +88,7 @@ class _DefaultHomeState extends State<DefaultHome> {
                         color: Colors.black,
                       )),
                   TextSpan(
-                    recognizer: TapGestureRecognizer()..onTap = () => Navigator.of(context).pushNamed(registerRoute),
+                    recognizer: TapGestureRecognizer()..onTap = () => context.read<AuthBloc>().add(const AuthEventShouldRegister()),
                     text: " Register Here.",
                     style: const TextStyle(
                         color: Colors.blue,

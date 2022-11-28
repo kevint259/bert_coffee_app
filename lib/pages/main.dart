@@ -1,4 +1,3 @@
-import 'package:bert_coffee/constants/routes.dart';
 import 'package:bert_coffee/domain/auth/auth_provider.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_bloc.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_event.dart';
@@ -18,6 +17,7 @@ void main() async {
   // ensures that UI
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   // runs app
   runApp(
     MaterialApp(
@@ -54,11 +54,9 @@ class StateScreen extends StatelessWidget {
         } else if (state is AuthStateRegistering) {
           return const RegisterScreen();
         } else if (state is AuthStateLoggedOut) {
-          if (state.exception == null) {
-            return const DefaultHome();
-          } else {
-            return const LoginScreen();
-          }
+          return const DefaultHome();
+        } else if (state is AuthStateLoggingIn) {
+          return const LoginScreen();
         } else {
           return const Scaffold(
             body: CircularProgressIndicator(),
