@@ -38,7 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(const AuthStateVerifyEmail());
         }
       } on Exception catch (e) {
-        emit(AuthStateLoggingIn(exception: e));
+        emit(AuthStateLoggingIn(exception: e, forgotPassword: false));
       }
     });
 
@@ -91,24 +91,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
-    // on event user forgets password
+    // on event user submits the forget password dialog
     on<AuthEventResetPassword>((event, emit) async {
       try {
         final email = event.email;
         await provider.resetPassword(email: email);
-        emit(const AuthStateLoggingIn(exception: null));
+        emit(const AuthStateLoggingIn(exception: null, forgotPassword: false));
       } on Exception catch (e) {
-        emit(AuthStateLoggingIn(exception: e));
+        emit(AuthStateLoggingIn(exception: e, forgotPassword: false));
       }
     });
+    
+    // on event that user presses the Forgot Password button
+    on<AuthEventForgotPassword>((event, emit) {
+      emit(const AuthStateLoggingIn(forgotPassword: true, exception: null));
+    });
 
-    on((event, emit) async {});
+    // resets login page after clicking "cancel" on reset password
+    on<AuthEventResetLoginPage>((event, emit) {
+      emit(const AuthStateLoggingIn(forgotPassword: false, exception: null));
+    });
 
     // resend verification email
 
     // on event user presses SIGN IN WITH EMAIL
     on<AuthEventSignInWithEmail>((event, emit) {
-      emit(const AuthStateLoggingIn(exception: null));
+      emit(const AuthStateLoggingIn(exception: null, forgotPassword: false));
     });
 
     // on event user wants to register

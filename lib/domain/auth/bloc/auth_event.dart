@@ -46,3 +46,7 @@ class AuthEventSignInWithEmail extends AuthEvent {
 class AuthEventForgotPassword extends AuthEvent {
   const AuthEventForgotPassword();
 }
+
+class AuthEventResetLoginPage extends AuthEvent {
+  const AuthEventResetLoginPage();
+}

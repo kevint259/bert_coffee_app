@@ -38,11 +38,9 @@ class _LoginScreenState extends State<LoginScreen> {
             return showErrorDialog(context, "Invalid Email");
           } else if (state.exception is AuthUserNotFoundException) {
             return showErrorDialog(context, "User Not Found");
-          } else {
-            return showErrorDialog(context, "Error Occurred");
-          }
-        } else if (state is AuthStateForgotPassword) {
-          return showResetPassword(context);
+          } else if (state.forgotPassword == true) {
+            return showResetPassword(context);
+          } 
         }
       },
       child: Scaffold(
@@ -151,19 +149,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // Forgot Password?
               InkWell(
-                onTap: () {
-                  context.read<AuthBloc>().add(const AuthEventForgotPassword());
-                },
-                child: const Text(
-                "Forgot Password?",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red,
-                )
-              )
-
-              ),
+                  onTap: () {
+                    context
+                        .read<AuthBloc>()
+                        .add(const AuthEventForgotPassword());
+                  },
+                  child: const Text("Forgot Password?",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                      ))),
 
               // Sizedbox
               const SizedBox(height: 30),

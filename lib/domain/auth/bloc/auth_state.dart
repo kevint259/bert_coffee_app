@@ -20,7 +20,8 @@ class AuthStateLoggedOut extends AuthState {
 
 class AuthStateLoggingIn extends AuthState {
   final Exception? exception;
-  const AuthStateLoggingIn({required this.exception});
+  final bool forgotPassword;
+  const AuthStateLoggingIn({required this.forgotPassword, required this.exception});
 }
 
 class AuthStateRegistering extends AuthState {
@@ -32,6 +33,3 @@ class AuthStateVerifyEmail extends AuthState {
   const AuthStateVerifyEmail();
 }
 
-class AuthStateForgotPassword extends AuthState {
-  const AuthStateForgotPassword();
-}
