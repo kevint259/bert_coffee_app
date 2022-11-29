@@ -8,12 +8,14 @@ class AuthUser extends Equatable {
   final String? name;
   final String? email;
   final bool isEmailVerified;
+  final Future<void> reload;
 
   const AuthUser(
     this.id,
     this.name,
     this.email,
     this.isEmailVerified,
+    this.reload,
   );
 
   @override
@@ -25,5 +27,6 @@ class AuthUser extends Equatable {
         user.displayName,
         user.email,
         user.emailVerified,
+        user.reload(),
       );
 }

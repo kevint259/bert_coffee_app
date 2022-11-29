@@ -50,3 +50,7 @@ class AuthEventForgotPassword extends AuthEvent {
 class AuthEventResetLoginPage extends AuthEvent {
   const AuthEventResetLoginPage();
 }
+
+class AuthEventResendEmailVerification extends AuthEvent {
+  const AuthEventResendEmailVerification();
+}

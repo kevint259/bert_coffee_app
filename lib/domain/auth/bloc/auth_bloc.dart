@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:bert_coffee/domain/auth/auth_exceptions.dart';
 import 'package:bert_coffee/domain/auth/auth_provider.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_event.dart';
 import 'package:bert_coffee/domain/auth/bloc/auth_state.dart';
@@ -51,16 +52,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await provider.registerUser(email: email, password: password);
         await provider.updateDisplayName(name: name);
         await provider.sendEmailVerification();
-        final user = provider.currentUser;
-        if (user == null) {
-          emit(const AuthStateVerifyEmail());
-        } else {
-          if (user.isEmailVerified) {
-            emit(const AuthStateLoggedIn());
-          } else {
-            emit(const AuthStateVerifyEmail());
-          }
-        }
+        emit(const AuthStateVerifyEmail());
       } on Exception catch (e) {
         emit(AuthStateRegistering(exception: e));
       }
@@ -73,13 +65,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(const AuthStateLoggedOut());
       } on Exception catch (e) {
         log(e.toString());
-        emit(state);
+        emit(const AuthStateLoggedOut());
       }
     });
 
     // on the event the user verifies email
     on<AuthEventVerifyEmail>((event, emit) async {
       final user = provider.currentUser;
+      await user?.reload;
       if (user != null) {
         if (user.isEmailVerified) {
           emit(const AuthStateLoggedIn());
@@ -112,8 +105,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(const AuthStateLoggingIn(forgotPassword: false, exception: null));
     });
 
-    // resend verification email
-
     // on event user presses SIGN IN WITH EMAIL
     on<AuthEventSignInWithEmail>((event, emit) {
       emit(const AuthStateLoggingIn(exception: null, forgotPassword: false));
@@ -123,6 +114,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEventShouldRegister>((event, emit) {
       emit(const AuthStateRegistering(exception: null));
     });
-  }
 
-}
+     // resend verification email
+     on<AuthEventResendEmailVerification>((event, emit) async {
+      await provider.sendEmailVerification();
+      emit(state);
+     });
+
+  }
+} 

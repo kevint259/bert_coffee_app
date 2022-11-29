@@ -71,10 +71,12 @@ class AuthProvider {
   // logs user out
   Future<void> logOut() async {
     final user = currentUser;
+    // i still don't know why i have to reload user 
+    await user?.reload;
     if (user != null) {
       await _firebaseAuth.signOut();
     } else {
-      throw Exception("User Not Logged In");
+      throw UserNotLoggedInException();
     }
   }
 
@@ -124,6 +126,16 @@ class AuthProvider {
       } else {
         throw GenericAuthException();
       }
+    }
+  }
+
+  // resend email verification 
+  Future<void> resendEmailVerification() async {
+    final user = _firebaseAuth.currentUser;
+    if (user != null) {
+      await user.sendEmailVerification();
+    } else {
+      throw UserNotLoggedInException();
     }
   }
 

@@ -21,3 +21,5 @@ class AuthWrongPasswordException implements Exception {}
 
 // GENERIC EXCEPTION (everything else not on the top)
 class GenericAuthException implements Exception {}
+
+class UserNotLoggedInException implements Exception {}

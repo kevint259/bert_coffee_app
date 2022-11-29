@@ -25,12 +25,6 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
   }
 
   @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -47,9 +41,9 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
         ),
         // check email text
         Padding(
-          padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
           child: Text(
-            "Check your email & click the link to activate account!",
+            "We've sent you an email confirmation! This page will automatically refresh once you've verified your email.",
             style: GoogleFonts.aBeeZee(fontSize: 16),
             textAlign: TextAlign.center,
           ),
@@ -58,7 +52,9 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
         Image.asset('assets/images/verify_email_logo.png'),
         // resend link
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            context.read<AuthBloc>().add(const AuthEventResendEmailVerification());
+          },
           style: ElevatedButton.styleFrom(
               elevation: 3,
               padding:
@@ -66,6 +62,12 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
           child: const Text("Resend Email Verification"),
         )
       ],
-    )));
+    ),),);
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 }
