@@ -6,7 +6,7 @@ import 'package:bert_coffee/firebase_options.dart';
 import 'package:bert_coffee/pages/authentication/email_verify_screen.dart';
 import 'package:bert_coffee/pages/authentication/login_screen.dart';
 import 'package:bert_coffee/pages/authentication/register_screen.dart';
-import 'package:bert_coffee/pages/coffee_main/main_screen.dart';
+import 'package:bert_coffee/pages/coffee_nav/home_page.dart';
 import 'package:bert_coffee/pages/default_home/default_home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
